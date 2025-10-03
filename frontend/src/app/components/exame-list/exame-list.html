@@ -1,0 +1,43 @@
+<div class="container">
+  <h2>Lista de Exames</h2>
+
+  <div *ngIf="!isLoading; else loading">
+    <div *ngIf="exames.length > 0; else noData">
+      <p>Total de exames cadastrados: {{ totalExames }}</p>
+
+      <div class="exam-list">
+        <table>
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Modalidade</th>
+              <th>Data do Exame</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let exame of exames">
+              <td>{{ exame.paciente.nome }}</td>
+              <td>{{ exame.modalidade }}</td>
+              <td>{{ exame.data_exame | date: 'dd/MM/yyyy HH:mm' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="pagination-controls">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span>Página {{ currentPage }} de {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage >= totalPages">Próxima</button>
+      </div>
+
+    </div>
+
+    <ng-template #noData>
+      <p>Nenhum exame cadastrado.</p>
+    </ng-template>
+  </div>
+
+  <ng-template #loading>
+    <p>Carregando...</p>
+  </ng-template>
+</div>

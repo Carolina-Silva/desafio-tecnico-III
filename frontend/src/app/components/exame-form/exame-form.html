@@ -1,0 +1,40 @@
+<h2>Cadastrar Novo Exame</h2>
+
+<form [formGroup]="exameForm" (ngSubmit)="onSubmit()" novalidate>
+  
+  <div class="form-group">
+    <label for="paciente_id">Paciente:</label>
+    <select id="paciente_id" formControlName="paciente_id">
+      <option value="" disabled>Selecione um paciente</option>
+      <option *ngFor="let paciente of pacientes$ | async" [value]="paciente.id">
+        {{ paciente.nome }}
+      </option>
+    </select>
+    <div *ngIf="exameForm.controls['paciente_id'].invalid && exameForm.controls['paciente_id'].touched" class="error-message">
+      <small>Paciente é obrigatório.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="modalidade">Modalidade:</label>
+    <select id="modalidade" formControlName="modalidade">
+      <option value="" disabled>Selecione uma modalidade</option>
+      <option *ngFor="let modalidade of modalidades" [value]="modalidade">
+        {{ modalidade }}
+      </option>
+    </select>
+    <div *ngIf="exameForm.controls['modalidade'].invalid && exameForm.controls['modalidade'].touched" class="error-message">
+      <small>Modalidade é obrigatória.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="data_exame">Data e Hora do Exame:</label>
+    <input id="data_exame" type="datetime-local" formControlName="data_exame">
+    <div *ngIf="exameForm.controls['data_exame'].invalid && exameForm.controls['data_exame'].touched" class="error-message">
+      <small>Data do exame é obrigatória.</small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="exameForm.invalid">Salvar Exame</button>
+</form>
