@@ -15,7 +15,7 @@ export class PacienteController {
     }
 
     try {
-        const dadosFormatados = {
+      const dadosFormatados = {
         nome,
         documento,
         data_nascimento: new Date(data_nascimento), // <-- CORREÇÃO
@@ -63,10 +63,19 @@ export class PacienteController {
 
   async update(request: FastifyRequest<{ Params: { id: string }, Body: Prisma.PacienteUpdateInput }>, reply: FastifyReply) {
     const { id } = request.params;
+    const body = request.body as any;
+
+    const dadosFormatados = {
+      ...body,
+    };
+
+    if (body.data_nascimento) {
+      dadosFormatados.data_nascimento = new Date(body.data_nascimento);
+    }
     try {
-      const paciente = await this.pacienteService.update(id, request.body);
+      const paciente = await this.pacienteService.update(id, dadosFormatados);
       return reply.send(paciente);
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
         return reply.status(404).send({ message: 'Paciente não encontrado.' });
       }
