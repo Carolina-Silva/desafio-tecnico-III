@@ -9,9 +9,26 @@
   <div *ngIf="!error">
     <div *ngIf="!isLoading; else loading">
       <div *ngIf="exames.length > 0; else noData">
-        
         <table>
-          </table>
+          <thead>
+            <tr>
+              <th>Paciente</th>
+              <th>Modalidade</th>
+              <th>Data do Exame</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let exame of exames">
+              <td>{{ exame.paciente.nome }}</td>
+              <td>{{ exame.modalidade }}</td>
+              <td>{{ exame.data_exame | date: 'dd/MM/yyyy HH:mm' }}</td>
+              <td>
+                <button (click)="onDelete(exame.id)" class="btn-delete">Deletar</button>
+              </td>
+            </tr>
+          </tbody>
+      </table>
 
         <div class="pagination-controls">
           <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>

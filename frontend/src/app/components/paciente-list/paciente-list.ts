@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { catchError, EMPTY, finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Paciente, PacienteService } from '../../services/paciente';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-paciente-list',
@@ -65,18 +66,29 @@ loadPacientes(): void {
     }
   }
 
-  onDelete(id: string): void {
-    if (confirm('Tem certeza que deseja deletar este paciente?')) {
-      this.pacienteService.deletePaciente(id).subscribe({
-        next: () => {
-          this.toastr.success('Paciente deletado com sucesso!');
-          this.loadPacientes();
-        },
-        error: (err) => {
-          console.error('Erro ao deletar paciente', err);
-          this.toastr.error('Não foi possível deletar o paciente.');
-        }
-      });
-    }
+   onDelete(id: string): void {
+    Swal.fire({
+      title: 'Tem certeza?',
+      text: "Você não poderá reverter esta ação!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sim, deletar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.pacienteService.deletePaciente(id).subscribe({
+          next: () => {
+            this.toastr.success('Paciente deletado com sucesso!');
+            this.loadPacientes();
+          },
+          error: (err) => {
+            this.toastr.error('Não foi possível deletar o paciente.');
+            console.error('Erro ao deletar paciente', err);
+          }
+        });
+      }
+    });
   }
 }

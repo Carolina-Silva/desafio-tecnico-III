@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { catchError, EMPTY, finalize } from 'rxjs';
 import { Exame, ExameService } from '../../services/exame';
 import { ToastrService } from 'ngx-toastr';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-exame-list',
@@ -65,19 +66,30 @@ export class ExameList implements OnInit {
     }
   }
 
-   onDelete(id: string): void {
-    if (confirm('Tem certeza que deseja deletar este exame?')) {
-      this.exameService.deleteExame(id).subscribe({
-        next: () => {
-          this.toastr.success('Exame deletado com sucesso!');
-          this.loadExames();
-        },
-        error: (err) => {
-          this.toastr.error('Não foi possível deletar o exame.');
-          console.error('Erro ao deletar exame', err);
-        }
-      });
-    }
-  }
+      onDelete(id: string): void {
+       Swal.fire({
+         title: 'Tem certeza?',
+         text: "Você não poderá reverter esta ação!",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Sim, deletar!',
+         cancelButtonText: 'Cancelar'
+       }).then((result) => {
+         if (result.isConfirmed) {
+           this.exameService.deleteExame(id).subscribe({
+             next: () => {
+               this.toastr.success('Paciente deletado com sucesso!');
+               this.loadExames();
+             },
+             error: (err) => {
+               this.toastr.error('Não foi possível deletar o paciente.');
+               console.error('Erro ao deletar paciente', err);
+             }
+           });
+         }
+       });
+     }
 
 }
