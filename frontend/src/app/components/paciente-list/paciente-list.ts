@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { finalize } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Paciente, PacienteService } from '../../services/paciente';
 
@@ -20,6 +20,7 @@ export class PacienteList implements OnInit {
   totalPacientes = 0;
   totalPages = 0;
   isLoading = false;
+  error: string | null = null;
   private toastr = inject(ToastrService); 
 
   constructor(private pacienteService: PacienteService) { }
@@ -28,22 +29,27 @@ export class PacienteList implements OnInit {
     this.loadPacientes();
   }
 
-  loadPacientes(): void {
-    this.isLoading = true;
-    this.pacienteService.getPacientes(this.currentPage, this.pageSize)
-      .pipe(finalize(() => this.isLoading = false))
-      .subscribe({
-        next: (response) => {
-          this.pacientes = response.data;
-          this.totalPacientes = response.total;
-          this.totalPages = Math.ceil(this.totalPacientes / this.pageSize);
-        },
-        error: (err) => {
-          console.error('Erro ao carregar pacientes', err);
-          this.toastr.error('Erro ao carregar pacientes');
-        }
-      });
-  }
+loadPacientes(): void {
+  this.isLoading = true;
+  this.error = null;
+
+  this.pacienteService.getPacientes(this.currentPage, this.pageSize)
+    .pipe(
+      finalize(() => this.isLoading = false),
+      catchError((err) => {
+        console.error('Erro ao carregar pacientes', err);
+        this.error = 'Ops! Não foi possível carregar os dados.';
+        return EMPTY;
+      })
+    )
+    .subscribe({
+      next: (response) => {
+        this.pacientes = response.data;
+        this.totalPacientes = response.total;
+        this.totalPages = Math.ceil(this.totalPacientes / this.pageSize);
+      }
+    });
+}
 
   nextPage(): void {
     if (this.currentPage < this.totalPages) {

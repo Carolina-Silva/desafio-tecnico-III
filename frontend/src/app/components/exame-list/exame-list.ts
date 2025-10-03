@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { finalize } from 'rxjs';
+import { catchError, EMPTY, finalize } from 'rxjs';
 import { Exame, ExameService } from '../../services/exame';
 import { ToastrService } from 'ngx-toastr';
 
@@ -19,6 +19,7 @@ export class ExameList implements OnInit {
   totalExames = 0;
   totalPages = 0;
   isLoading = false;
+  error: string | null = null;
 
   constructor(
     private exameService: ExameService,
@@ -31,17 +32,21 @@ export class ExameList implements OnInit {
 
   loadExames(): void {
     this.isLoading = true;
+    this.error = null; 
+
     this.exameService.getExames(this.currentPage, this.pageSize)
-      .pipe(finalize(() => this.isLoading = false))
+      .pipe(
+        finalize(() => this.isLoading = false),
+        catchError((err) => { 
+          this.error = 'Ops! Não foi possível carregar os exames.';
+          return EMPTY;
+        })
+      )
       .subscribe({
         next: (response) => {
           this.exames = response.data;
           this.totalExames = response.total;
           this.totalPages = Math.ceil(this.totalExames / this.pageSize);
-        },
-        error: (err) => {
-          this.toastr.error('Erro ao carregar exames.');
-          console.error('Erro ao carregar exames', err);
         }
       });
   }
