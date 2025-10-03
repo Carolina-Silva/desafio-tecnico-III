@@ -15,7 +15,13 @@ export class PacienteController {
     }
 
     try {
-      const novoPaciente = await this.pacienteService.create({ nome, documento, data_nascimento });
+        const dadosFormatados = {
+        nome,
+        documento,
+        data_nascimento: new Date(data_nascimento), // <-- CORREÇÃO
+      };
+
+      const novoPaciente = await this.pacienteService.create(dadosFormatados);
       return reply.status(201).send(novoPaciente);
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
