@@ -1,8 +1,15 @@
-<h1>Plataforma Médica</h1>
-<nav>
-  <a routerLink="/pacientes">Pacientes</a>
-  </nav>
 
-<hr>
+<header class="main-header">
+  <div class="container">
+    <h1>Plataforma Médica</h1>
+    <nav>
+      <a routerLink="/pacientes" routerLinkActive="active">Pacientes</a>
+      <a routerLink="/pacientes/novo" class="btn btn-primary">Cadastrar Novo Paciente</a>
+    </nav>
+  </div>
+</header>
+<app-spinner *ngIf="loadingService.loading$ | async"></app-spinner>
 
-<router-outlet></router-outlet>
+<main class="container">
+  <router-outlet></router-outlet>
+</main>

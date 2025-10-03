@@ -2,7 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PacienteService } from '../../services/paciente';
-import { ActivatedRoute, Router } from '@angular/router'; 
+import { ActivatedRoute, Router } from '@angular/router';
+
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-paciente-form',
@@ -21,6 +23,7 @@ export class PacienteForm  implements OnInit {
   private pacienteService = inject(PacienteService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private toastr = inject(ToastrService); 
 
   constructor() {
     this.pacienteForm = this.fb.group({
@@ -56,7 +59,7 @@ export class PacienteForm  implements OnInit {
     if (this.isEditMode && this.currentPacienteId) {
       this.pacienteService.updatePaciente(this.currentPacienteId, formValue).subscribe({
         next: () => {
-          alert('Paciente atualizado com sucesso!');
+          this.toastr.success('Paciente atualizado com sucesso!');
           this.router.navigate(['/pacientes']);
         },
         error: (err) => alert(`Erro ao atualizar: ${err.error.message}`)
@@ -64,7 +67,7 @@ export class PacienteForm  implements OnInit {
     } else {
       this.pacienteService.createPaciente(formValue).subscribe({
         next: () => {
-          alert('Paciente cadastrado com sucesso!');
+          this.toastr.success('Paciente cadastrado com sucesso!');
           this.router.navigate(['/pacientes']);
         },
         error: (err) => alert(`Erro ao cadastrar: ${err.error.message}`)

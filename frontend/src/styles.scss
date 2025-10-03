@@ -1,1 +1,50 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.main-header {
+  background-color: #333;
+  color: white;
+  padding: 20px 0;
+  margin-bottom: 30px;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+
+    &.active,
+    &:hover {
+      background-color: #555;
+    }
+  }
+}
+
+main.container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

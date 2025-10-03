@@ -1,23 +1,28 @@
-<a routerLink="/pacientes/novo" class="btn-new">Cadastrar Novo Paciente</a>
-<hr>
-<h2>Lista de Pacientes</h2>
+<div class="container">
+  <h2>Lista de Pacientes</h2>
 
-<div *ngIf="pacientesResponse$ | async as response; else loading">
-  <p>Total de pacientes: {{ response.total }}</p>
+  <div *ngIf="pacientesResponse$ | async as response; else loading">
+    <p>Total de pacientes: {{ response.total }}</p>
 
-  <ul>
-    <li *ngFor="let paciente of response.data">
-      <strong>{{ paciente.nome }}</strong> (Documento: {{ paciente.documento }})
-      <a [routerLink]="['/pacientes/editar', paciente.id]" class="btn-edit">Editar</a>
-      <button (click)="onDelete(paciente.id)" class="btn-delete">Deletar</button>
-    </li>
-  </ul>
+    <div class="patient-list">
+      <div *ngFor="let paciente of response.data" class="patient-card">
+        <div class="patient-info">
+          <strong>{{ paciente.nome }}</strong>
+          <span>Documento: {{ paciente.documento }}</span>
+        </div>
+        <div class="patient-actions">
+          <a [routerLink]="['/pacientes/editar', paciente.id]" class="btn btn-edit">Editar</a>
+          <button (click)="onDelete(paciente.id)" class="btn btn-delete">Deletar</button>
+        </div>
+      </div>
+    </div>
 
-  <ng-template #noData>
-    <p>Nenhum paciente cadastrado.</p>
+    <ng-template #noData>
+      <p>Nenhum paciente cadastrado.</p>
+    </ng-template>
+  </div>
+
+  <ng-template #loading>
+    <p>Carregando pacientes...</p>
   </ng-template>
 </div>
-
-<ng-template #loading>
-  <p>Carregando pacientes...</p>
-</ng-template>
