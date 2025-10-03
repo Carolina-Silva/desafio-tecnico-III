@@ -1,7 +1,5 @@
-// src/modules/pacientes/paciente.service.ts
-import { PrismaClient, Prisma } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import { Prisma } from '@prisma/client';
+import { prisma } from '../../lib/prisma';
 
 export class PacienteService {
   async create(data: Prisma.PacienteCreateInput) {
