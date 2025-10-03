@@ -24,16 +24,15 @@ export class ExameService {
     try {
       const exame = await prisma.exame.create({ data });
       return exame;
-    } catch (error) {
+    } catch (error: any) {
       if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
-  
         const exameExistente = await prisma.exame.findUnique({
           where: { idempotency_key: data.idempotency_key },
         });
-
-        throw new IdempotencyError('Chave de idempotência duplicada', exameExistente);
+        if (exameExistente) {
+          throw new IdempotencyError('Chave de idempotência duplicada', exameExistente);
+        }
       }
-
       throw error;
     }
   }
