@@ -1,0 +1,41 @@
+<h2>Cadastrar Novo Paciente</h2>
+
+<form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()" novalidate>
+  
+  <div class="form-group">
+    <label for="nome">Nome:</label>
+    <input id="nome" type="text" formControlName="nome">
+    
+    <div *ngIf="pacienteForm.controls['nome'].invalid && pacienteForm.controls['nome'].touched" class="error-message">
+      <small *ngIf="pacienteForm.controls['nome'].hasError('required')">Nome é obrigatório.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="documento">Documento (CPF):</label>
+    <input id="documento" type="text" formControlName="documento">
+    
+    <div *ngIf="pacienteForm.controls['documento'].invalid && pacienteForm.controls['documento'].touched" class="error-message">
+      <small *ngIf="pacienteForm.controls['documento'].hasError('required')">Documento é obrigatório.</small>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="data_nascimento">Data de Nascimento:</label>
+    <input id="data_nascimento" type="date" formControlName="data_nascimento">
+
+    <div *ngIf="pacienteForm.controls['data_nascimento'].invalid && pacienteForm.controls['data_nascimento'].touched" class="error-message">
+      <small *ngIf="pacienteForm.controls['data_nascimento'].hasError('required')">Data de nascimento é obrigatória.</small>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="pacienteForm.invalid">Salvar Paciente</button>
+</form>
+
+<style>
+  .form-group { margin-bottom: 1rem; }
+  label { display: block; margin-bottom: 0.25rem; }
+  input { width: 100%; padding: 0.5rem; box-sizing: border-box; }
+  .error-message { color: red; margin-top: 0.25rem; }
+  button:disabled { background-color: #ccc; cursor: not-allowed; }
+</style>

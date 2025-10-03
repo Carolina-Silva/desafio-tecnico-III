@@ -1,0 +1,21 @@
+<a routerLink="/pacientes/novo" class="btn-new">Cadastrar Novo Paciente</a>
+<hr>
+<h2>Lista de Pacientes</h2>
+
+<div *ngIf="pacientesResponse$ | async as response; else loading">
+  <p>Total de pacientes: {{ response.total }}</p>
+
+  <ul *ngIf="response.data.length > 0; else noData">
+    <li *ngFor="let paciente of response.data">
+      <strong>{{ paciente.nome }}</strong> (Documento: {{ paciente.documento }})
+    </li>
+  </ul>
+
+  <ng-template #noData>
+    <p>Nenhum paciente cadastrado.</p>
+  </ng-template>
+</div>
+
+<ng-template #loading>
+  <p>Carregando pacientes...</p>
+</ng-template>
