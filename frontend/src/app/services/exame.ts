@@ -49,4 +49,8 @@ export class ExameService {
     };
     return this.http.post<Exame>(this.apiUrl, payload);
   }
+
+  deleteExame(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

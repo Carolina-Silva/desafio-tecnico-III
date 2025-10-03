@@ -19,6 +19,9 @@
               <td>{{ exame.paciente.nome }}</td>
               <td>{{ exame.modalidade }}</td>
               <td>{{ exame.data_exame | date: 'dd/MM/yyyy HH:mm' }}</td>
+              <td>
+                <button (click)="onDelete(exame.id)" class="btn-delete">Deletar</button>
+              </td>
             </tr>
           </tbody>
         </table>

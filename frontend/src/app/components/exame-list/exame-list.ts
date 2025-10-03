@@ -60,4 +60,19 @@ export class ExameList implements OnInit {
     }
   }
 
+   onDelete(id: string): void {
+    if (confirm('Tem certeza que deseja deletar este exame?')) {
+      this.exameService.deleteExame(id).subscribe({
+        next: () => {
+          this.toastr.success('Exame deletado com sucesso!');
+          this.loadExames();
+        },
+        error: (err) => {
+          this.toastr.error('Não foi possível deletar o exame.');
+          console.error('Erro ao deletar exame', err);
+        }
+      });
+    }
+  }
+
 }
