@@ -1,17 +1,17 @@
-
 <header class="main-header">
-  <div class="container">
-    <h1>Plataforma</h1>
-    <nav>
-      <a routerLink="/pacientes" routerLinkActive="active">Pacientes</a>
-      <a routerLink="/pacientes/novo" class="btn btn-primary">Cadastrar Novo Paciente</a>
-      <a routerLink="/exames">Exames</a>
-      <a routerLink="/exames/novo" class="btn btn-primary">Cadastrar Novo exame</a>
-    </nav>
+  <div class="header-container">
+    <h1><i class="fa-solid fa-wave-square"></i> Plataforma</h1>
+<nav>
+  <a routerLink="/pacientes" routerLinkActive="active"><i class="fa-solid fa-users"></i> Pacientes</a>
+  <a routerLink="/exames" routerLinkActive="active"><i class="fa-solid fa-file-medical"></i> Exames</a>
+  <a routerLink="/pacientes/novo" class="btn btn-primary"><i class="fa-solid fa-user-plus"></i> Novo Paciente</a>
+  <a routerLink="/exames/novo" class="btn btn-primary"><i class="fa-solid fa-notes-medical"></i> Novo Exame</a>
+</nav>
   </div>
 </header>
+
 <app-spinner *ngIf="loadingService.loading$ | async"></app-spinner>
 
-<main class="container">
+<main class="main-content">
   <router-outlet></router-outlet>
 </main>
