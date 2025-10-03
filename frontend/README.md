@@ -1,59 +1,57 @@
-# Frontend
+# Desafio Técnico - Interface de Pacientes e Exames (Frontend)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.4.
+Esta é a aplicação frontend para o sistema de gerenciamento de pacientes e exames, construída com a versão mais recente do Angular (Standalone).
 
-## Development server
+## ✨ Funcionalidades
 
-To start a local development server, run:
+-   Interface completa para CRUD de Pacientes (Listar, Criar, Editar, Deletar).
+-   Interface para Cadastrar, Listar e Deletar Exames.
+-   Listas com paginação.
+-   Formulários Reativos com validação visual.
+-   Sistema de notificações (toasts) para feedback ao usuário.
+-   Tratamento de erro de rede com opção de "Tentar Novamente".
+-   Suíte de testes de componente e serviço com Karma/Jasmine.
 
-```bash
-ng serve
-```
+## 💻 Tecnologias Utilizadas
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+-   **Angular** (Standalone)
+-   **TypeScript**
+-   **SCSS**
+-   **RxJS**
+-   `ngx-toastr` (Notificações)
+-   `SweetAlert2` (Modais de confirmação)
+-   **Karma** & **Jasmine** (Testes)
 
-## Code scaffolding
+## 🚀 Como Rodar o Projeto
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+### Pré-requisitos
+-   Node.js (v18+)
+-   npm ou similar
+-   A **API do Backend** deve estar rodando em `http://localhost:3000`.
 
-```bash
-ng generate component component-name
-```
+### Passos para Instalação
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+1.  **Clone o repositório:**
+    ```bash
+    cd frontend
+    ```
 
-```bash
-ng generate --help
-```
+2.  **Instale as dependências:**
+    ```bash
+    npm install
+    ```
 
-## Building
+### Executando a Aplicação
 
-To build the project run:
+- **Modo de Desenvolvimento:**
+    O comando abaixo irá iniciar o servidor de desenvolvimento em `http://localhost:4200`. A aplicação recarrega automaticamente após qualquer mudança nos arquivos.
+    ```bash
+    npm start
+    ```
+    *A aplicação usa um proxy (`proxy.conf.json`) para redirecionar as chamadas de API para o backend, evitando problemas de CORS.*
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **Rodar os Testes:**
+    ```bash
+    ng test
+    ```
+    Este comando executa os testes de unidade e de componente via Karma.
