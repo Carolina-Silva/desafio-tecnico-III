@@ -32,4 +32,17 @@ export class PacienteService {
     return this.http.post<Paciente>(this.apiUrl, paciente);
   }
 
+  getPacienteById(id: string): Observable<Paciente> {
+    return this.http.get<Paciente>(`${this.apiUrl}/${id}`);
+  }
+
+  updatePaciente(id: string, paciente: Partial<Paciente>): Observable<Paciente> {
+    return this.http.put<Paciente>(`${this.apiUrl}/${id}`, paciente);
+  }
+  
+
+  deletePaciente(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
 }

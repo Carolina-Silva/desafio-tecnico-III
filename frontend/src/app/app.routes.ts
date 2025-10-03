@@ -6,5 +6,6 @@ import { PacienteForm } from './components/paciente-form/paciente-form';
 export const routes: Routes = [
     { path: '', redirectTo: '/pacientes', pathMatch: 'full' },
     { path: 'pacientes', component: PacienteList },
-    { path: 'pacientes/novo', component: PacienteForm }
+    { path: 'pacientes/novo', component: PacienteForm },
+    { path: 'pacientes/editar/:id', component: PacienteForm }
 ];

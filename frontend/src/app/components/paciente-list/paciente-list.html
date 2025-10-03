@@ -5,9 +5,11 @@
 <div *ngIf="pacientesResponse$ | async as response; else loading">
   <p>Total de pacientes: {{ response.total }}</p>
 
-  <ul *ngIf="response.data.length > 0; else noData">
+  <ul>
     <li *ngFor="let paciente of response.data">
       <strong>{{ paciente.nome }}</strong> (Documento: {{ paciente.documento }})
+      <a [routerLink]="['/pacientes/editar', paciente.id]" class="btn-edit">Editar</a>
+      <button (click)="onDelete(paciente.id)" class="btn-delete">Deletar</button>
     </li>
   </ul>
 
