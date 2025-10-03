@@ -38,7 +38,32 @@ export class ExameService {
     }
   }
 
-  async findMany() {
-    // definir
+  async findMany(page: number, pageSize: number) {
+    const skip = (page - 1) * pageSize;
+    const take = pageSize;
+
+    const [exames, total] = await prisma.$transaction([
+      prisma.exame.findMany({ 
+        skip, 
+        take,
+        orderBy: { data_exame: 'desc' },
+        include: {
+          paciente: {
+            select: {
+              nome: true,
+            },
+          },
+        },
+      }),
+      prisma.exame.count(),
+    ]);
+
+    return { data: exames, total };
+  }
+
+  async delete(id: string) {
+    await prisma.exame.delete({
+      where: { id },
+    });
   }
 }
