@@ -12,7 +12,11 @@ export class PacienteService {
     const take = pageSize;
 
     const [pacientes, total] = await prisma.$transaction([
-      prisma.paciente.findMany({ skip, take }),
+      prisma.paciente.findMany({ 
+        skip, 
+        take,
+        orderBy: { nome: 'asc' }
+      }),
       prisma.paciente.count(),
     ]);
 

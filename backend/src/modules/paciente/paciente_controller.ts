@@ -41,7 +41,7 @@ export class PacienteController {
       return reply.send({
         ...result,
         page,
-        pageSize,
+        totalPages: Math.ceil(result.total / pageSize),
       });
     } catch (error) {
       return reply.status(500).send({ message: 'Erro interno no servidor.' });

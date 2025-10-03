@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -24,8 +24,12 @@ export class PacienteService {
 
   constructor(private http: HttpClient) { }
 
-  getPacientes(): Observable<PaginatedResponse<Paciente>> {
-    return this.http.get<PaginatedResponse<Paciente>>(this.apiUrl);
+   getPacientes(page: number, pageSize: number): Observable<PaginatedResponse<Paciente>> {
+    let params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+
+    return this.http.get<PaginatedResponse<Paciente>>(this.apiUrl, { params });
   }
 
   createPaciente(paciente: Omit<Paciente, 'id'>): Observable<Paciente> {

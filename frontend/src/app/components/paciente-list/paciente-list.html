@@ -1,20 +1,30 @@
 <div class="container">
   <h2>Lista de Pacientes</h2>
 
-  <div *ngIf="pacientesResponse$ | async as response; else loading">
-    <p>Total de pacientes: {{ response.total }}</p>
+  <div *ngIf="!isLoading; else loading">
 
-    <div class="patient-list">
-      <div *ngFor="let paciente of response.data" class="patient-card">
-        <div class="patient-info">
-          <strong>{{ paciente.nome }}</strong>
-          <span>Documento: {{ paciente.documento }}</span>
-        </div>
-        <div class="patient-actions">
-          <a [routerLink]="['/pacientes/editar', paciente.id]" class="btn btn-edit">Editar</a>
-          <button (click)="onDelete(paciente.id)" class="btn btn-delete">Deletar</button>
+    <div *ngIf="pacientes.length > 0; else noData">
+      <p>Total de pacientes cadastrados: {{ totalPacientes }}</p>
+
+      <div class="patient-list">
+        <div *ngFor="let paciente of pacientes" class="patient-card">
+          <div class="patient-info">
+            <strong>{{ paciente.nome }}</strong>
+            <span>Documento: {{ paciente.documento }}</span>
+          </div>
+          <div class="patient-actions">
+            <a [routerLink]="['/pacientes/editar', paciente.id]" class="btn btn-edit">Editar</a>
+            <button (click)="onDelete(paciente.id)" class="btn btn-delete">Deletar</button>
+          </div>
         </div>
       </div>
+
+      <div class="pagination-controls">
+        <button (click)="previousPage()" [disabled]="currentPage === 1">Anterior</button>
+        <span>Página {{ currentPage }} de {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage >= totalPages">Próxima</button>
+      </div>
+
     </div>
 
     <ng-template #noData>
